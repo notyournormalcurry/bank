@@ -5,6 +5,7 @@ from sqlalchemy import insert, update, select, and_
 class Customer:
     """
     class Customer: bank customers 
+    class variable: _customerSequence, increments by 1 for each new customer
     properties: cid, fn, ln 
     methods: isNew()
     """
@@ -36,9 +37,10 @@ class Customer:
 
 class BankAccount:
     """
-    class BankAccount:
+    class BankAccount: base class
+    class variable: _accountN, increment 1 for each added account
     properties: balance 
-    methods: deposit, withdraw;
+    methods: addAccount(), deposit(), withdraw();
     """
     #class variable, static variable
     _accountN = 0   #private account sequence number
@@ -80,10 +82,10 @@ class BankAccount:
     
 class CheckingAcount(BankAccount):
     """
-    class CheckingAccount:
+    class CheckingAccount: 
     class attribut: limit, the maximum amount can be withdrawn each time
-    properties: balance 
-    methods: deposit, withdraw;
+    properties: 
+    methods: openAccount(), withdraw();
     """
     limit = 1000
 
@@ -110,8 +112,8 @@ class CheckingAcount(BankAccount):
 class SavingAccount(BankAccount):
     """
     class SavingAccount:
-    properties: balance
-    methods: deposit, withdraw, interest
+    properties: 
+    methods: openAccount(), interest()
     """
 
     def __init__(self, cid=None):
@@ -134,8 +136,9 @@ class SavingAccount(BankAccount):
 class Database:
     """
     class Database: create and access database
-    properties: 
-    methods: deposit; withdraw: check balance
+    properties: engine, connection 
+    methods: findCustomer(), addCustomer(), findAccount(), addAccount(),
+             updateBalance(), close() 
     """
     def __init__(self, name):
         #connect to database, create if not exist
@@ -219,15 +222,8 @@ class Database:
         self.engine.dispose()
 
 """
-readme.md
-UML diagram of the classes
-Push to GitHub
-data storage: SQL
-executable via command line; accept user inputs, 
-return results from command line
-logging: print messags on screen and log errors and warnings to a file
+ main entry point
 """
-# main entry point
 if __name__ == '__main__':
     #lg is global variable
     logging.basicConfig(level=logging.DEBUG)
