@@ -230,11 +230,15 @@ if __name__ == '__main__':
     lg = logging.getLogger()
 
     lg.debug('logging debug')
-    lg.warning('logging warning')
-    lg.error('logging error')
-    lg.critical('logging critical')
+    #lg.warning('logging warning')
+    #lg.error('logging error')
+    #lg.critical('logging critical')
     #db is global variable, connect to the database
-    db = Database('sqlite:///bank.sqlite')
+    try:
+        db = Database('sqlite:///bank.sqlite')
+    except Exception as e:
+        print(e)
+        exit(0)
 
     print('Enter your first name:')
     fn = input()
